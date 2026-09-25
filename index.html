@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oliva Store - Tienda Multi-Categoría</title>
+    <!-- Vinculación al archivo de estilos externo -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Header Principal -->
+    <header>
+        <div class="nav-container">
+            <div class="brand" onclick="mostrarInicio()">
+                <img src="imgs/logo.png" alt="Oliva Store Logo" class="logo-img">
+                <h1>Oliva Store</h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- 1. PRESENTACIÓN DEL NEGOCIO (INICIO) -->
+    <section class="about-section">
+        <div class="about-container">
+            <h2>Bienvenido a Oliva Store 🛍️</h2>
+            <p>Somos tu tienda multirrubro de confianza. Nos especializamos en acercarte lo último en tecnología, fragancias importadas, cosmética capilar y entretenimiento con atención personalizada y entregas ágiles.</p>
+            
+            <div class="features-grid">
+                <div class="feature-item">
+                    <span>✨</span>
+                    <h4>Garantía de Calidad</h4>
+                    <p>Productos 100% originales e importados.</p>
+                </div>
+                <div class="feature-item">
+                    <span>🚀</span>
+                    <h4>Envíos Rápidos</h4>
+                    <p>Coordinamos la entrega a tu puerta.</p>
+                </div>
+                <div class="feature-item">
+                    <span>📲</span>
+                    <h4>Pedido Directo</h4>
+                    <p>Compras fácil y rápido por WhatsApp.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. BARRA DE CATEGORÍAS NAVEGABLES (CON MENÚ DESPLEGABLE FRAGANCIAS) -->
+    <div class="categorias-bar">
+        <div class="categorias-bar-container">
+            <div class="dropdown">
+                <button class="cat-tab" id="tab-perfumes" onclick="seleccionarCategoria('perfumes', 'Todos')">
+                    🌸 Fragancias ▾
+                </button>
+                <div class="dropdown-content">
+                    <a onclick="seleccionarCategoria('perfumes', 'Todos')">✨ Ver Todas</a>
+                    <a onclick="seleccionarCategoria('perfumes', 'Masculino')">👔 Masculino</a>
+                    <a onclick="seleccionarCategoria('perfumes', 'Femenino')">👗 Femenino</a>
+                    <a onclick="seleccionarCategoria('perfumes', 'Body Splash')">✨ Body Splash</a>
+                </div>
+            </div>
+            <button class="cat-tab" id="tab-smartphones" onclick="seleccionarCategoria('smartphones')">📱 Smartphones</button>
+            <button class="cat-tab" id="tab-consolas" onclick="seleccionarCategoria('consolas')">🎮 Consolas</button>
+            <button class="cat-tab" id="tab-accesorios" onclick="seleccionarCategoria('accesorios')">🎧 Accesorios</button>
+            <button class="cat-tab" id="tab-belleza" onclick="seleccionarCategoria('belleza')">💄 Belleza</button>
+            <button class="cat-tab tab-special" id="tab-encargo" onclick="mostrarSeccionEncargo()">📦 Pedidos por Encargo</button>
+        </div>
+    </div>
+
+    <!-- Título Dinámico -->
+    <div class="hero">
+        <h2 id="titulo-seccion">Sectores Destacados</h2>
+        <p id="subtitulo-seccion">Selecciona un sector para ver nuestros productos disponibles.</p>
+    </div>
+
+    <div class="container">
+        <!-- Vista Inicio: Mostrar Grilla de Sectores -->
+        <div id="vista-sectores-home" class="sectores-grid">
+            <div class="sector-card" onclick="seleccionarCategoria('perfumes', 'Todos')">
+                <div>
+                    <span class="icon">🌸</span>
+                    <h3>Fragancias</h3>
+                    <p>Fragancias masculinas, femeninas e importadas de alta gama.</p>
+                </div>
+            </div>
+            <div class="sector-card" onclick="seleccionarCategoria('smartphones')">
+                <div>
+                    <span class="icon">📱</span>
+                    <h3>Smartphones</h3>
+                    <p>Los últimos modelos con la mejor tecnología.</p>
+                </div>
+            </div>
+            <div class="sector-card" onclick="seleccionarCategoria('consolas')">
+                <div>
+                    <span class="icon">🎮</span>
+                    <h3>Consolas</h3>
+                    <p>Consolas de videojuegos y entretenimiento.</p>
+                </div>
+            </div>
+            <div class="sector-card" onclick="seleccionarCategoria('accesorios')">
+                <div>
+                    <span class="icon">🎧</span>
+                    <h3>Accesorios</h3>
+                    <p>Auriculares, cargadores y smartwatch.</p>
+                </div>
+            </div>
+            <div class="sector-card" onclick="seleccionarCategoria('belleza')">
+                <div>
+                    <span class="icon">💄</span>
+                    <h3>Belleza</h3>
+                    <p>Tratamientos Karseell, aceites, Victoria's Secret y más.</p>
+                </div>
+            </div>
+            <!-- Card Destacada para Pedidos por Encargo -->
+            <div class="sector-card sector-encargo" onclick="mostrarSeccionEncargo()">
+                <div>
+                    <span class="icon">✨📦</span>
+                    <h3>Pedidos por Encargo</h3>
+                    <p>¿Buscas un producto específico o modelo que no está en stock? ¡Lo traemos por encargo!</p>
+                </div>
+                <button class="btn-encargo-card">Solicitar Cotización 💬</button>
+            </div>
+        </div>
+
+        <!-- Vista de Pedidos Especiales Por Encargo -->
+        <div id="vista-encargo" style="display: none;">
+            <div class="seccion-encargo">
+                <h3>📦 Pedidos por Encargo</h3>
+                <p>Puedes encargarnos productos, modelos o fragancias que no se encuentren dentro del catálogo directo y los traemos especialmente para ti <strong>(demora aproximada de 1 semana)</strong>. Déjanos los detalles y te cotizaremos a la brevedad.</p>
+                
+                <form id="form-encargo">
+                    <div class="form-group">
+                        <label>Producto que buscas / Modelo exacto:</label>
+                        <input type="text" id="encargo-producto" required placeholder="Ej: iPhone 15 Pro Max 256GB Titanio / Perfume Tom Ford">
+                    </div>
+                    <div class="form-group">
+                        <label>Tu Nombre y Apellido:</label>
+                        <input type="text" id="encargo-nombre" required placeholder="Ej: Lucas Pérez">
+                    </div>
+                    <div class="form-group">
+                        <label>Detalles adicionales (Opcional):</label>
+                        <textarea id="encargo-notas" rows="3" placeholder="Ej: Color preferido, capacidad, versión específica, etc."></textarea>
+                    </div>
+                    <button type="button" class="btn btn-ws" onclick="enviarEncargoWhatsApp()">Consultar Disponibilidad por WhatsApp 📲</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Vista Catálogo de Productos -->
+        <div id="loading" style="display: none;">Cargando catálogo...</div>
+        <div id="catalogo" class="productos-grid" style="display: none;"></div>
+
+        <!-- Carrito de Compras -->
+        <div class="seccion-carrito" id="seccion-carrito">
+            <h2>🛒 Tu Carrito de Compras</h2>
+            <div id="lista-carrito" style="margin-top: 1rem;">
+                <p style="color: #9ca3af;">El carrito está vacío.</p>
+            </div>
+            <h3 style="margin-top: 1rem; text-align: right; color: #4ade80;">Total: $<span id="total-carrito">0</span></h3>
+
+            <!-- Formulario de Envío -->
+            <h3 style="margin-top: 2rem; margin-bottom: 1.2rem; color: #f0fdf4;">📦 Datos de Entrega</h3>
+            <form id="form-pedido">
+                <div class="form-group">
+                    <label>Nombre y Apellido:</label>
+                    <input type="text" id="nombre" required placeholder="Ej: María González">
+                </div>
+                <div class="form-group">
+                    <label>Dirección de Entrega / Ciudad:</label>
+                    <input type="text" id="direccion" required placeholder="Ej: Av. Olmos 345, Oliva">
+                </div>
+                <div class="form-group">
+                    <label>Notas adicionales (Opcional):</label>
+                    <textarea id="notas" rows="2" placeholder="Ej: Horario preferido, timbre, etc."></textarea>
+                </div>
+                <button type="button" class="btn btn-ws" onclick="enviarPedidoWhatsApp()">Enviar Pedido por WhatsApp 📲</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const NUMERO_WHATSAPP = "5493532678378";
+
+        const URLS_SHEETS = {
+            perfumes: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5GkbTsbHvK5dwe71Khu6l5OCfaXGlSKM-k9B19YasNeiee_b_tKxZZWNzGX2EzGD46hIWTvVKTfhP/pub?gid=0&single=true&output=csv",
+            smartphones: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5GkbTsbHvK5dwe71Khu6l5OCfaXGlSKM-k9B19YasNeiee_b_tKxZZWNzGX2EzGD46hIWTvVKTfhP/pub?gid=1467666572&single=true&output=csv",
+            consolas: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5GkbTsbHvK5dwe71Khu6l5OCfaXGlSKM-k9B19YasNeiee_b_tKxZZWNzGX2EzGD46hIWTvVKTfhP/pub?gid=1906012288&single=true&output=csv",
+            accesorios: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5GkbTsbHvK5dwe71Khu6l5OCfaXGlSKM-k9B19YasNeiee_b_tKxZZWNzGX2EzGD46hIWTvVKTfhP/pub?gid=42205986&single=true&output=csv",
+            belleza: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5GkbTsbHvK5dwe71Khu6l5OCfaXGlSKM-k9B19YasNeiee_b_tKxZZWNzGX2EzGD46hIWTvVKTfhP/pub?gid=1389063035&single=true&output=csv"
+        };
+
+        let productosActuales = [];
+        let carrito = [];
+
+        function csvToJSON(csvText) {
+            const lines = csvText.split('\n');
+            const result = [];
+            if(lines.length === 0) return result;
+            
+            const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+
+            for (let i = 1; i < lines.length; i++) {
+                if (!lines[i].trim()) continue;
+                const obj = {};
+                const currentline = lines[i].split(',');
+
+                headers.forEach((header, j) => {
+                    obj[header] = currentline[j] ? currentline[j].trim() : '';
+                });
+                result.push(obj);
+            }
+            return result;
+        }
+
+        function mostrarInicio() {
+            document.querySelectorAll(".cat-tab").forEach(el => el.classList.remove("active"));
+
+            document.getElementById("titulo-seccion").innerText = "Sectores Destacados";
+            document.getElementById("subtitulo-seccion").innerText = "Selecciona un sector para ver nuestros productos disponibles.";
+
+            document.getElementById("vista-sectores-home").style.display = "grid";
+            document.getElementById("vista-encargo").style.display = "none";
+            document.getElementById("catalogo").style.display = "none";
+            document.getElementById("loading").style.display = "none";
+            document.getElementById("seccion-carrito").style.display = "block";
+        }
+
+        function mostrarSeccionEncargo() {
+            document.querySelectorAll(".cat-tab").forEach(el => el.classList.remove("active"));
+            const tabEncargo = document.getElementById("tab-encargo");
+            if (tabEncargo) tabEncargo.classList.add("active");
+
+            document.getElementById("titulo-seccion").innerText = "✨ Pedidos por Encargo";
+            document.getElementById("subtitulo-seccion").innerText = "Cuéntanos qué producto necesitas y te lo cotizamos a la brevedad.";
+
+            document.getElementById("vista-sectores-home").style.display = "none";
+            document.getElementById("catalogo").style.display = "none";
+            document.getElementById("loading").style.display = "none";
+            document.getElementById("seccion-carrito").style.display = "none";
+            document.getElementById("vista-encargo").style.display = "block";
+        }
+
+        async function seleccionarCategoria(categoria, subcategoria = 'Todos') {
+            document.querySelectorAll(".cat-tab").forEach(el => el.classList.remove("active"));
+            const tabActiva = document.getElementById(`tab-${categoria}`);
+            if (tabActiva) tabActiva.classList.add("active");
+
+            const nombresCat = {
+                perfumes: subcategoria !== 'Todos' ? `🌸 Fragancias (${subcategoria})` : "🌸 Fragancias",
+                consolas: "🎮 Consolas",
+                smartphones: "📱 Smartphones",
+                accesorios: "🎧 Accesorios",
+                belleza: "💄 Belleza & Cuidado Personal"
+            };
+
+            document.getElementById("titulo-seccion").innerText = nombresCat[categoria];
+            document.getElementById("subtitulo-seccion").innerText = "Agrega tus productos favoritos al carrito.";
+
+            document.getElementById("vista-sectores-home").style.display = "none";
+            document.getElementById("vista-encargo").style.display = "none";
+            document.getElementById("seccion-carrito").style.display = "block";
+            
+            const loading = document.getElementById("loading");
+            const catalogoEl = document.getElementById("catalogo");
+
+            loading.style.display = "block";
+            catalogoEl.style.display = "none";
+            catalogoEl.innerHTML = "";
+
+            try {
+                const response = await fetch(URLS_SHEETS[categoria]);
+                const csvData = await response.text();
+
+                let productosParsed = csvToJSON(csvData).map(p => ({
+                    id: p.id,
+                    nombre: p.nombre,
+                    precio: parseFloat(p.precio) || 0,
+                    descripcion: p.descripcion,
+                    subcategoria: p.subcategoria || '',
+                    imagen: p.imagen || 'https://via.placeholder.com/200'
+                }));
+
+                // Filtro por subcategoría si se seleccionó una distinta a 'Todos'
+                if (categoria === 'perfumes' && subcategoria !== 'Todos') {
+                    productosParsed = productosParsed.filter(p => p.subcategoria.trim().toLowerCase() === subcategoria.trim().toLowerCase());
+                }
+
+                productosActuales = productosParsed;
+
+                loading.style.display = "none";
+                catalogoEl.style.display = "grid";
+                renderizarCatalogo();
+            } catch (error) {
+                console.error("Error al cargar la hoja:", error);
+                loading.innerText = "Error al conectar con la hoja de productos.";
+            }
+        }
+
+        function renderizarCatalogo() {
+            const catalogoEl = document.getElementById("catalogo");
+            catalogoEl.innerHTML = "";
+
+            if(productosActuales.length === 0) {
+                catalogoEl.innerHTML = "<p style='color:#9ca3af; text-align:center; grid-column: 1/-1;'>No hay productos disponibles en esta subcategoría.</p>";
+                return;
+            }
+
+            productosActuales.forEach(prod => {
+                catalogoEl.innerHTML += `
+                    <div class="producto-card">
+                        <div>
+                            <img src="${prod.imagen}" alt="${prod.nombre}">
+                            <h3>${prod.nombre}</h3>
+                            <p>${prod.descripcion}</p>
+                        </div>
+                        <div>
+                            <div class="precio">$${prod.precio.toLocaleString('es-AR')}</div>
+                            <button class="btn" onclick="agregarAlCarrito('${prod.id}')">Agregar al Carrito</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function agregarAlCarrito(id) {
+            const producto = productosActuales.find(p => p.id == id);
+            const itemEnCarrito = carrito.find(item => item.id == id);
+
+            if (itemEnCarrito) {
+                itemEnCarrito.cantidad++;
+            } else {
+                carrito.push({ ...producto, cantidad: 1 });
+            }
+            actualizarCarrito();
+        }
+
+        function eliminarDelCarrito(id) {
+            carrito = carrito.filter(item => item.id != id);
+            actualizarCarrito();
+        }
+
+        function actualizarCarrito() {
+            const listaEl = document.getElementById("lista-carrito");
+            const totalEl = document.getElementById("total-carrito");
+
+            if (carrito.length === 0) {
+                listaEl.innerHTML = "<p style='color: #9ca3af;'>El carrito está vacío.</p>";
+                totalEl.innerText = "0";
+                return;
+            }
+
+            listaEl.innerHTML = "";
+            let total = 0;
+
+            carrito.forEach(item => {
+                const subtotal = item.precio * item.cantidad;
+                total += subtotal;
+                listaEl.innerHTML += `
+                    <div class="carrito-item">
+                        <div>
+                            <strong style="color:#f0fdf4;">${item.nombre}</strong> (x${item.cantidad}) - <span style="color:#4ade80;">$${subtotal.toLocaleString('es-AR')}</span>
+                        </div>
+                        <button style="color:#ef4444; background:none; border:none; cursor:pointer; font-weight:bold;" onclick="eliminarDelCarrito('${item.id}')">Eliminar</button>
+                    </div>
+                `;
+            });
+
+            totalEl.innerText = total.toLocaleString('es-AR');
+        }
+
+        function enviarPedidoWhatsApp() {
+            if (carrito.length === 0) return alert("Tu carrito está vacío.");
+
+            const nombre = document.getElementById("nombre").value.trim();
+            const direccion = document.getElementById("direccion").value.trim();
+            const notas = document.getElementById("notas").value.trim();
+
+            if (!nombre || !direccion) return alert("Por favor completa tu nombre y dirección.");
+
+            let mensaje = `Hola *Oliva Store*, quiero realizar el siguiente pedido:\n\n`;
+            let total = 0;
+
+            carrito.forEach(item => {
+                const subtotal = item.precio * item.cantidad;
+                total += subtotal;
+                mensaje += `• ${item.nombre} x${item.cantidad} - $${subtotal.toLocaleString('es-AR')}\n`;
+            });
+
+            mensaje += `\n*Total a pagar:* $${total.toLocaleString('es-AR')}\n\n`;
+            mensaje += `*Datos para la entrega:*\n👤 *Cliente:* ${nombre}\n📍 *Dirección:* ${direccion}\n`;
+            if (notas) mensaje += `📝 *Notas:* ${notas}\n`;
+
+            window.open(`https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(mensaje)}`, "_blank");
+        }
+
+        function enviarEncargoWhatsApp() {
+            const producto = document.getElementById("encargo-producto").value.trim();
+            const nombre = document.getElementById("encargo-nombre").value.trim();
+            const notas = document.getElementById("encargo-notas").value.trim();
+
+            if (!producto || !nombre) return alert("Por favor completa el nombre del producto y tu nombre.");
+
+            let mensaje = `Hola *Oliva Store* 👋, quería consultar si pueden traerme por encargo el siguiente producto:\n\n`;
+            mensaje += `📌 *Producto buscado:* ${producto}\n`;
+            mensaje += `👤 *Cliente:* ${nombre}\n`;
+            if (notas) mensaje += `📝 *Detalles:* ${notas}\n`;
+            mensaje += `\n¿Me podrían pasar cotización y tiempo estimado de entrega? ¡Muchas gracias!`;
+
+            window.open(`https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(mensaje)}`, "_blank");
+        }
+
+        // Mostrar Inicio al entrar
+        mostrarInicio();
+    </script>
+</body>
+</html>
