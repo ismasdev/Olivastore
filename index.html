@@ -178,7 +178,7 @@
         </div>
     </div>
 
-    <script>
+<script>
         const NUMERO_WHATSAPP = "5493532678378";
 
         const URLS_SHEETS = {
@@ -192,22 +192,50 @@
         let productosActuales = [];
         let carrito = [];
 
+        // Función CSV blindada: respeta comillas y descripciones largas con comas internas
         function csvToJSON(csvText) {
             const lines = csvText.split('\n');
             const result = [];
             if(lines.length === 0) return result;
             
-            const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+            function parseCSVLine(text) {
+                let row = [];
+                let insideQuote = false;
+                let entry = '';
+                for (let i = 0; i < text.length; i++) {
+                    let c = text[i];
+                    if (c === '"') {
+                        insideQuote = !insideQuote;
+                    } else if (c === ',' && !insideQuote) {
+                        row.push(entry.trim());
+                        entry = '';
+                    } else {
+                        entry += c;
+                    }
+                }
+                row.push(entry.trim());
+                return row.map(val => val.replace(/^"|"$/g, '').trim());
+            }
+
+            const headers = parseCSVLine(lines[0]).map(h => h.toLowerCase());
 
             for (let i = 1; i < lines.length; i++) {
                 if (!lines[i].trim()) continue;
+                const currentline = parseCSVLine(lines[i]);
                 const obj = {};
-                const currentline = lines[i].split(',');
 
                 headers.forEach((header, j) => {
-                    obj[header] = currentline[j] ? currentline[j].trim() : '';
+                    obj[header] = currentline[j] || '';
                 });
-                result.push(obj);
+
+                result.push({
+                    id: obj.id || i,
+                    nombre: obj.nombre || '',
+                    precio: parseFloat(obj.precio.replace(/\./g, '').replace(',', '.')) || 0,
+                    descripcion: obj.descripcion || '',
+                    subcategoria: obj.subcategoria || '',
+                    imagen: obj.imagen || ''
+                });
             }
             return result;
         }
@@ -271,14 +299,7 @@
                 const response = await fetch(URLS_SHEETS[categoria]);
                 const csvData = await response.text();
 
-                let productosParsed = csvToJSON(csvData).map(p => ({
-                    id: p.id,
-                    nombre: p.nombre,
-                    precio: parseFloat(p.precio) || 0,
-                    descripcion: p.descripcion,
-                    subcategoria: p.subcategoria || '',
-                    imagen: p.imagen || 'https://via.placeholder.com/200'
-                }));
+                let productosParsed = csvToJSON(csvData);
 
                 // Filtro por subcategoría si se seleccionó una distinta a 'Todos'
                 if (categoria === 'perfumes' && subcategoria !== 'Todos') {
@@ -306,10 +327,14 @@
             }
 
             productosActuales.forEach(prod => {
+                const imgSource = prod.imagen && prod.imagen.startsWith('http') 
+                    ? prod.imagen 
+                    : 'https://via.placeholder.com/300x300/141c15/4ade80?text=Oliva+Store';
+
                 catalogoEl.innerHTML += `
                     <div class="producto-card">
                         <div>
-                            <img src="${prod.imagen}" alt="${prod.nombre}">
+                            <img src="${imgSource}" alt="${prod.nombre}" onerror="this.src='https://via.placeholder.com/300x300/141c15/4ade80?text=Sin+Imagen'">
                             <h3>${prod.nombre}</h3>
                             <p>${prod.descripcion}</p>
                         </div>
